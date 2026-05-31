@@ -1,0 +1,68 @@
+# 企业知识库Decay监控 - 配置文件
+
+# 知识库配置
+knowledge_base:
+  path: ./docs
+  scan_recursive: true
+  supported_extensions:
+    - .md
+    - .rst
+    - .txt
+    - .pdf
+    - .docx
+  exclude_dirs:
+    - .git
+    - node_modules
+    - __pycache__
+    - .history
+
+# Decay分析配置
+decay:
+  # 文档年龄阈值（天）
+  max_age_days: 365
+  warning_age_days: 180
+  critical_age_days: 90
+
+  # 扫描频率检查
+  check_update_frequency: true
+  expected_update_interval_days: 90
+
+  # 引用检查
+  check_references: true
+  reference_timeout_days: 180
+
+# 评分权重配置
+scoring:
+  weights:
+    last_updated: 0.30
+    reference_freshness: 0.20
+    content_stability: 0.15
+    topic_relevance: 0.15
+    read_frequency: 0.10
+    author_activity: 0.10
+
+# 严重等级阈值
+severity:
+  green: 80     # 以上为健康
+  yellow: 60    # 以上为警告
+  orange: 40    # 以上为需关注
+  red: 0        # 以下为危险
+
+# 报告配置
+report:
+  output_dir: ./reports
+  formats:
+    - json
+    - html
+    - csv
+  include_details: true
+  include_recommendations: true
+
+# 通知配置
+notification:
+  enabled: true
+  email:
+    smtp_server: smtp.example.com
+    smtp_port: 587
+  webhook:
+    url: ""
